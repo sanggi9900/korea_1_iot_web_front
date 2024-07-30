@@ -1,0 +1,46 @@
+p {
+  color: blue;
+}
+
+h1 {
+  color: green;
+}
+
+/* id 선택자: #(샾) */
+#monday {
+  color: blueviolet;
+
+}
+/* class 선택자: .(마침표) */
+.git {
+    color: lightgoldenrodyellow;
+  }
+
+/* 보다우선 */
+/* 태그(타입, 요소) 선택자 */
+h2 {
+  color: blue !important/* 권장하지 않음*/;
+}
+
+h1 {
+  color: pink;
+}
+h1 {
+  color: red;
+}
+h1 {
+  color: orange;
+}
+/* 제일 마지막 선택자가 선택된다 */
+
+/*! 스타일 상속 */
+
+body {
+  font-size: 30px;   /*적용값*/
+  background-color: yellowgreen;   /*상대값  되어있으면 된것 처럼 보여진다*/
+ }
+
+p {
+  font-size: 10px;
+  background-color: aliceblue;
+}
