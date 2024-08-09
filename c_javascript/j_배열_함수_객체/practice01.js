@@ -13,34 +13,60 @@
 // +) 전체 점심메뉴 제거하기
 
 //? 점심 객체 예시
-let hansic= {
+let BabBab = {
  id: 1,
  price: 8.5,
-CoName: 'Bab&Bab'
+Name: 'hansic',
+quantity: 4
 }
 
- let mandu = {
+ let SouthCountryHand = {
   id: 2,
   price: 6.8,
-  CoName: 'South Country hand'
+  Name: 'mandu',
+  quantity: 5
  }
 
-let garbi = {
+let Hangeun = {
   id: 3,
   price: 7.5,
-  CoName: 'Hangeun Galbi'
+  Name: 'garbi',
+  quantity: 2
 }
 
-let Udon = {
+let DayUdon = {
   id: 4,
   price: 8.0,
-  CoName: 'DayUdon'
+  Name: 'Udon',
+  quantity: 1
 }
 
-let gimbab = {
+let GrandMoMhand = {
   id: 5,
   price: 7.0,
-  CoName: 'GrandMoMhand '
+  Name: 'gimbab',
+  quantity: 2
 }
 
-let hangry = [];
+let hungry = [];
+
+function addToEat(id, price, Name, quantity) {
+  const index = hungry.findIndex(item => item.id === id);
+
+  if(index > -1) {
+   hungry[index].quantity += quantity;
+  } else {
+    hungry.push({id, price ,Name, quantity});
+  }
+
+  displayHungry();
+}
+
+function displayHungry() {
+  console.log('=== Lunch MENU');
+  hungry.forEach(item => {
+    console.log(`메뉴이름: ${item.Name} - 가격: $${item.price}, 식사량: ${item.quantity}`);
+    console.log(`계산
+      `);
+  })
+}
