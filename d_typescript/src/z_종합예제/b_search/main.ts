@@ -42,11 +42,14 @@
     <p><strong>Username:</strong> ${user.username}</p>
     <p><strong>Email:</strong> ${user.email}</p>
   `;
+
+
     return userCard;
   };
 
   // 사용자 정보 배열을 받아 화면에 표시하는 함수입니다.
   const displayUsers = (users: Users): void => {
+    // 반환값이 없다는것을 나타내는것 없어도 된다 
     // 'user-list' ID를 가진 엘리먼트를 가져옵니다.
     const userList = document.getElementById("user-list");
     if (userList) {
@@ -65,43 +68,71 @@
     return users.filter(
       (user) =>
         // 사용자의 이름, 사용자명, 이메일 중 하나라도 쿼리 문자열을 포함하면 해당 사용자를 반환합니다.
+
+        // 순회되고 있는 데이터.포함되어있는지 확인(매개변수로 받아오는 데이터값)
         user.name.toLowerCase().includes(query.toLowerCase()) ||
         user.username.toLowerCase().includes(query.toLowerCase()) ||
         user.email.toLowerCase().includes(query.toLowerCase())
+        // 하나라도 포함되면 true 반환
     );
   };
 
   // 사용자 정보를 정렬하는 함수입니다.
+  // 리터널??
   const sortUsers = (users: Users, key: "name" | "email"): Users => {
     // 지정된 키(name 또는 email)를 기준으로 사용자 정보를 정렬합니다.
+
+    // [...users]
+    // >> 새로운 배열 주소값에 기존의 10명의 사용자 데이터만 복사해서 가져옴
+
+    // 배열.sort()
+    // >> 배열의 요소를 정렬할 때 사용
+    // >> 콜백함수를 인자로 받음 (함수의 인자는 비교할 데이터가 2가지가 입력)
+
+    // cf) 현재 a, b 데이터는 객체(User 인터페이스)
+    //    key가 name으로 전달된 경우 a[name].localeCompare(b[name])
+
+    // 문자열.localeCompare(문자열)
+    // >> 문자열을 비교하는 메서드 (알파벳 순서에 따라 정렬할 때 유용)
+    // >> 반환값(음수: a가 b보다 앞 / 0: a와 b가 동일 / 양수: b가 a보다 앞)
+    // >> 오름차순 정렬
     return [...users].sort((a, b) => a[key].localeCompare(b[key]));
+
+    // cf) 배열명.sort();  //  이것을 활용해도 상관없다
+    // >> 문자열 비교에만 흔히 사용
+
+    // const numbers = [5, 30, 2, 8];
+    // numbers.sort();
+    // 2, 5, 8, 30 (X)
+    // 2, 30, 5, 8 (O)
   };
 
   // 이벤트 리스너를 추가하는 함수입니다.
   const addEventListeners = (users: Users): void => {
     // 'search-input'과 'sort-select' 엘리먼트를 가져옵니다.
-    const searchInput = document.getElementById(
-      "search-input"
-    ) as HTMLInputElement;
-    const sortSelect = document.getElementById(
-      "sort-select"
-    ) as HTMLSelectElement;
+    const searchInput = document.getElementById("search-input") as HTMLInputElement;
+    const sortSelect = document.getElementById("sort-select") as HTMLSelectElement;
 
     // 검색 입력 필드에 입력 이벤트 리스너를 추가합니다.
     searchInput?.addEventListener("input", () => {
       const query = searchInput.value;
       const filteredUsers = filterUsers(users, query);
+
       const sortKey = sortSelect.value as "name" | "email";
       const sortedUsers = sortUsers(filteredUsers, sortKey);
+      
       displayUsers(sortedUsers);
     });
 
     // 정렬 선택 필드에 변경 이벤트 리스너를 추가합니다.
     sortSelect?.addEventListener("change", () => {
+      
       const query = searchInput.value;
       const filteredUsers = filterUsers(users, query);
+
       const sortKey = sortSelect.value as "name" | "email";
       const sortedUsers = sortUsers(filteredUsers, sortKey);
+
       displayUsers(sortedUsers);
     });
   };
@@ -109,6 +140,7 @@
   // 초기화 함수로, 사용자 데이터를 가져와 화면에 표시하고 이벤트 리스너를 설정합니다.
   const init = async (): Promise<void> => {
     const users = await fetchUsers();
+    // 실질적으로 데이터를 가져오는 함수를 호출하는 경우 비동기적인 처리가 기본
     displayUsers(users);
     addEventListeners(users);
   };
