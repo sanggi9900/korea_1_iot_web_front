@@ -1,5 +1,5 @@
 import React from 'react'
-
+import { Wrapper } from './Props02'
 /*
 REACT 문버 체계:JSX
 
@@ -44,6 +44,10 @@ type MultiPropsType = {
 // b = 2;
 
 function MultiProps({name, colorProps}: MultiPropsType){
+  // {name, aga}의 매개변수에
+  // 데이터 person을 전달 (person = {name: '이승아', age: 50})
+  // >> name=person.name, age=person.age
+
   return (
     <div style={{color: colorProps }}>반갑습니다. {name}님</div>
   )
@@ -64,9 +68,11 @@ export default function Props01() {
 
   return (
     <div>
-      {/* props의 경우 객체로 전달! */}
+      {/* props의 경우 객체로 전달! >> 함수에서는 해당 객체가 매개변수에 전달*/}
+      <Wrapper>
       <ChildComponent name='이승아' /> 
-      <ChildComponent name='이도경' /> 
+      <ChildComponent name='이도경' />  
+      </Wrapper>
  
       {/* 여러 개의 props 전달 */}
       <MultiProps name='이기석' colorProps='pink' />
