@@ -1,5 +1,13 @@
 import React from "react";
-import UserState01 from "./a_UseState/UserState01";
+import UseState01 from "./a_UseState/UseState01";
+import UseState02 from "./a_UseState/UseState02";
+import UseState03 from "./a_UseState/UseState03";
+import UseState04 from "./a_UseState/UseState04";
+import UseState05 from "./a_UseState/UseState05";
+import UseState06 from "./a_UseState/UseState06";
+import UseRef01 from "./b_UseRef/UseRef01";
+import UseRef02 from "./b_UseRef/UseRef02";
+import Practice01 from "./a_UseState/practice01";
 
 // 전체 파일 정렬
 // ctrl + a: 전체 선택
@@ -7,13 +15,25 @@ import UserState01 from "./a_UseState/UserState01";
 function Index() {
   return (
     <div>
-      <h1 style={{backgroundColor: "black", color: "white"}} >
+      <h1 style={{ backgroundColor: "black", color: "white" }}>
         리액트 Hooks
       </h1>
 
-        <h2>리액트 Hooks - useState</h2>
-        <UserState01/>
+      <h2>리액트 Hooks - useState</h2>
+      <UseState01 />
+      <UseState02 />
+      <UseState03 />
+      <UseState04 />
+      <UseState05 />
+      <UseState06 />
+
+      <Practice01 />
+
+      <hr />
+      <UseRef01 />
+      <UseRef02 />
     </div>
+
   );
 }
 

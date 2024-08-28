@@ -20,7 +20,7 @@ import React, { useState } from 'react'
   >> 상태 변경시 컴포넌트의 재렌더링을 유발
 */
 
-export default function UserState01() {
+export default function UseState01() {
   //! userState의 기본 구문
   // const [state, setState] = useState<type>(initialValue);
 
