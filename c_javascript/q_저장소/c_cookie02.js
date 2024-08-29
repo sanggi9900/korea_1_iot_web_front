@@ -28,7 +28,7 @@ function getCookieValue(cookieName) {
   return ''; // 일치하는 쿠키 이름이 없으면 빈 문자열 반환
 }
 
-let username = getCookieValue('username');
+let username = getCookieValue('username'); 
 console.log(username);
 
 let userAge = getCookieValue('userAge');
@@ -54,22 +54,5 @@ deleteCookie('username');
 deleteCookie('cookie02');
 deleteCookie('oneDate');
 
-
-// 원하는 쿠키이름, 쿠키 값 >> 전체프로젝트  경로에서 접근 가능한 쿠키 설정
-// +) 만료 날짜 1시간뒤
-
-// document.cookie = "username=hsg; path=/;"
-
-
-
-// 현재 시간 가져오기
-let now = new Date();
-
-// 1시간(60분)을 더하기
-now.setTime(now.getTime() + (60 * 60 * 1000)); // 현재 시간에 1시간을 더함
-
-// 만료 날짜를 UTC 문자열로 변환
-let expires = "expires=" + now.toUTCString();
-
-// 쿠키 설정
-document.cookie = "username=hsg; " + expires + "; path=/;";
+// 원하는 쿠키 이름, 쿠키 값 >> 전체 프로젝트 경로에서 접근 가능한 쿠키 설정
+// +) 만료 날짜 1시간 뒤
