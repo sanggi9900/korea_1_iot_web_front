@@ -1,26 +1,28 @@
-import React from "react";
-import { Route, Routes } from "react-router-dom";
+import React, { useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
 
-//#  고정될 컴포넌트
-import NaviBar from "./components/NaviBar";
+//# 고정될 컴포넌트
+import NaviBar from './components/NaviBar';
 
 //# 경로에 따라 바뀌는 컴포넌트
-import Basic from "./pages/a_basic";
-import Hooks from "./pages/b_hooks";
-import RouterComponent from "./pages/c_Router";
+import Basic from './pages/a_basic';
+import Hooks from './pages/b_hooks';
+import RouterComponent from './pages/c_Router';
 import RouterHook from './pages/d_RouterHook';
 import Axios from './pages/e_Axios';
 import GlobalState from './pages/f_GlobalState';
 import Style from './pages/g_Style/Style01';
 
+import Parent from './pages/c_Router/Parent';
+
+import Example01 from './pages/c_Router/Example01';
+import Example02 from './pages/c_Router/Example02';
+
 import Todos01 from './pages/z_todos';
-import Parent from "./pages/c_Router/Parent";
-import Example01 from "./pages/c_Router/Example01";
-import Example02 from "./pages/c_Router/Example02";
+import axios from 'axios';
 
 // 전역 상태 관리 예제
 // import { useCountStore } from './pages/f_GlobalState/Zustand01';
-
 
 //! 리액트 프로젝트 개발 실행 명령어
 // npm run start
@@ -29,37 +31,104 @@ import Example02 from "./pages/c_Router/Example02";
 function App() {
   // const { count } = useCountStore();
 
+  const [username, setUsername] = useState<string>('Guest');
+  const [message, setMessage] = useState<string>('');
+
+  // 회원가입 용 사용자 이메일 & 비밀번호
+  const [registerUserEmail, setRegisterUserEmail] = useState('');
+  const [registerPassword, setRegisterPassword] = useState('');
+  
+  const handleRegister = async () => {
+    try {
+      const response = await axios.post('http://localhost:8080/api/auth/signUp', // HTTP 통신 경로
+        { // 전달할 데이터
+          email: registerUserEmail, 
+          password: registerPassword
+        }, 
+        { withCredentials: true } // 쿠키, 인증, 헤더와 같은 자격 증명을 요청에 포함
+      );
+
+      const responseData = response.data;
+
+      if (responseData.sucess) {
+        setMessage(responseData.message);
+        setRegisterUserEmail('');
+        setRegisterPassword('');
+      } else {
+        setMessage(responseData.message);
+      }
+
+    } catch (error) {
+      console.error('Error during registration', error);
+      setMessage('Registration Failed');
+    }
+  }
+
   return (
     <div>
       <h1>React Project</h1>
       <NaviBar />
-      {/*  - 기초 (리액트 개념, 컴포넌트, JSX, Props) */}
-      {/* <Basic /> */}
+      
+      <div>
+        <h2>{username}님 안녕하세요 :)</h2>
+        <p>{message}</p>
+
+        {username === 'Guest' ? (
+          <>
+            <button>로그인</button>
+            <div>
+              <h3>회원가입</h3>
+              <input 
+                type="text" 
+                placeholder='이메일을 입력해주세요'
+                value={registerUserEmail}
+                onChange={(e) => setRegisterUserEmail(e.target.value)}
+              />
+              <br />
+              <input 
+                type="text" 
+                placeholder='비밀번호를 입력해주세요'
+                value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)}
+              />
+              <br />
+              <button onClick={handleRegister}>회원가입</button>
+            </div>
+          </>
+        ) : (
+          <>
+          
+          </>
+        )}
+      </div>
+
+
+      {/* <p>{count}</p> */}
 
       {/* Routes태그: Route를 감싸는 컴포넌트 */}
       <Routes>
         {/* Route 태그: 단일 태그 사용 권장 */}
         {/* path속성: 해당 Routes 내에서 사용하는 URL 경로 */}
-        {/* element속성: 해당 path속성과 일치하는 경우 보여질 컴포넌트 */}
-        <Route path="/basic" element={<Basic />} />
-        <Route path="/hooks" element={<Hooks />} />
-        
+        {/* element속성: 해당 path속성과 일치할 경우 보여질 컴포넌트 */}
+        <Route path='/basic' element={<Basic />} />
+        <Route path='/hooks' element={<Hooks />} />
+
         {/*  
           해당 컴포넌트에 대한 메인경로/*
           >> 위 컴포넌트에서 라우트 경로에 따라 페이지 전환이 일어남을 명시
         */}
         <Route path='/routerComponent/*' element={<RouterComponent />} />
 
-{/*  
-  해당 컴포넌트에 대한 메인경로
-  >> 하위 컴포넌트를 추가 경로로 명시
-*/}
-<Route path='/parent'>
-  {/* 
-  index 경로를 사용하여 감싸는 Route 컴포넌트의 경로에 기본적으로 렌더링될 컴포넌트를 지정 
-  */}
-  <Route index element={<Parent />} />
-        
+        {/*  
+          해당 컴포넌트에 대한 메인경로
+          >> 하위 컴포넌트를 추가 경로로 명시
+        */}
+        <Route path='/parent'>
+          {/* 
+          index 경로를 사용하여 감싸는 Route 컴포넌트의 경로에 기본적으로 렌더링될 컴포넌트를 지정 
+          */}
+          <Route index element={<Parent />} />
+          
           {/* parent 경로에 추가되는 path에 따라 보여지는 컴포넌트가 달라짐 */}
           <Route path='example01' element={<Example01 />} />
           <Route path='example02' element={<Example02 />} />
